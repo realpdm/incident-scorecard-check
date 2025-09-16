@@ -1,0 +1,39 @@
+[project]
+name = "incident-scorecard-check"
+version = "0.1.0"
+description = "A Python tool that analyzes incidents and their impact on service scorecard scores from Incident.io and Cortex.io"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"},
+]
+keywords = ["incident-management", "monitoring", "scorecards", "cortex", "incident-io"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Monitoring",
+]
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic>=2.11.9",
+    "python-dotenv>=1.1.1",
+]
+
+
+[project.scripts]
+incident-analyzer = "main:main"
+
+[project.urls]
+Homepage = "https://github.com/realpdm/incident-scorecard-check"
+Repository = "https://github.com/realpdm/incident-scorecard-check"
+Issues = "https://github.com/realpdm/incident-scorecard-check/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

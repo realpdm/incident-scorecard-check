@@ -31,7 +31,7 @@ A Python tool that fetches public incidents from a configurable lookback period 
 
 3. **Get API tokens:**
    - **Incident.io**: https://app.incident.io/settings/api-keys
-   - **Cortex.io**: https://app.getcortexapp.com/admin/api-keys
+   - **Cortex.io**: https://app.getcortexapp.com/admin/settings/api-keys
 
 ## Configuration
 
@@ -112,13 +112,13 @@ The tool includes error handling for:
 📈 SERVICE IMPACT ANALYSIS
 --------------------------------------------------------------------------------
  1. payment-service
-    🔥 3 incidents | Score: 0.8
-    📉 Failing scorecard rules:
-       • Security Scan: 0.0
-       • Documentation Coverage: 0.5
+   🔥 2 incidents
+    📊 Operational Readiness: Score: 9.0 | Level: Gold
+    📊 Security: Score: 2.0 | Level: Silver
+    📉 Failing Security rules:
+       • Has no Cycode SAST/SCA high detections: 0.0
 
  2. user-authentication
-    🔥 2 incidents | Score: 0.9
-    📉 Failing scorecard rules:
-       • Test Coverage: 0.7
-```
+    🔥 1 incidents
+    📊 Operational Readiness: Score: 9.0 | Level: Gold
+    📊 Security: Score: 3.0 | Level: Gold```
