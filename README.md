@@ -1,6 +1,8 @@
-# Incident.io & Cortex.io Integration Tool
+# Incident Service Incident Reporting Tool
 
 A Python tool that fetches public incidents from a configurable lookback period (default: 30 days) from Incident.io and analyzes the scorecard scores of impacted services from Cortex.io.
+
+This tool was made as simple demonstration of the using the [Incident.io](https://www.cortex.io/) and [Cortex](https://cortex.io) APIs together to produce something useful. Consider the code _alpha_ at best. 
 
 ## Features
 
