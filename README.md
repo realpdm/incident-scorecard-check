@@ -121,4 +121,5 @@ The tool includes error handling for:
  2. user-authentication
     🔥 1 incidents
     📊 Operational Readiness: Score: 9.0 | Level: Gold
-    📊 Security: Score: 3.0 | Level: Gold```
+    📊 Security: Score: 3.0 | Level: Gold
+```
