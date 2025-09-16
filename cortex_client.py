@@ -3,7 +3,7 @@
 from typing import List, Optional, Dict, Any
 import httpx
 from models import ServiceScorecard, ScorecardScore, ScorecardRule, CortexService
-from config import CORTEX_BASE_URL, TARGET_SCORECARDS
+from config import CORTEX_BASE_URL, get_target_scorecard_tags
 
 
 class CortexIOClient:
@@ -101,13 +101,14 @@ class CortexIOClient:
         """
         async with httpx.AsyncClient() as client:
             try:
-                # First get the scorecard definition to get rule titles
+                # First get the scorecard definition to get rule titles and name
                 scorecard_def_response = await client.get(
                     f"{self.base_url}/scorecards/{scorecard_tag}",
                     headers=self.headers
                 )
                 scorecard_def_response.raise_for_status()
                 scorecard_def = scorecard_def_response.json().get("scorecard", {})
+                scorecard_name = scorecard_def.get("name", "")
 
                 rule_info_map = {}
                 for rule in scorecard_def.get("rules", []):
@@ -130,7 +131,7 @@ class CortexIOClient:
                     service_data = service_score.get("service", {})
                     if service_data.get("tag") == service_tag:
                         return self._parse_scorecard_from_service_score(
-                            service_tag, scorecard_tag, service_score, rule_info_map
+                            service_tag, scorecard_tag, scorecard_name, service_score, rule_info_map
                         )
 
                 return None
@@ -171,9 +172,6 @@ class CortexIOClient:
         Returns:
             List of ServiceScorecard objects
         """
-        # Use the configured target scorecards
-        target_scorecards = TARGET_SCORECARDS
-
         all_services = await self.get_services()
         service_tag_map = {
             service.title.lower(): service.tag
@@ -184,21 +182,8 @@ class CortexIOClient:
             service_tag_map[service.tag.lower()] = service.tag
 
         if not scorecard_tags:
-            all_scorecards = await self.get_scorecards()
-            scorecard_tags = []
-
-            for scorecard in all_scorecards:
-                scorecard_tag = scorecard.get("tag", "")
-                scorecard_name = scorecard.get("name", "")
-
-                for target_id, target_name in target_scorecards.items():
-                    if (target_id in scorecard_tag or
-                        target_name.lower() in scorecard_name.lower()):
-                        scorecard_tags.append(scorecard_tag)
-                        break
-
-            if not scorecard_tags:
-                return []
+            # Use the configured target scorecard tags directly
+            scorecard_tags = get_target_scorecard_tags()
 
         # Fetch scorecards for matching services across all target scorecards
         service_scorecards = []
@@ -285,6 +270,7 @@ class CortexIOClient:
         self,
         service_tag: str,
         scorecard_tag: str,
+        scorecard_name: str,
         service_score_data: Dict[str, Any],
         rule_info_map: Dict[str, Dict[str, Any]] = None
     ) -> ServiceScorecard:
@@ -332,6 +318,7 @@ class CortexIOClient:
         scorecard = ServiceScorecard(
             service_tag=service_tag,
             scorecard_tag=scorecard_tag,
+            scorecard_name=scorecard_name,
             scores=scores,
             total_score=total_score,
             current_level=current_level

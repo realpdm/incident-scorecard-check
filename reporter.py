@@ -11,7 +11,7 @@ from models import (
 )
 from incident_client import IncidentIOClient
 from cortex_client import CortexIOClient
-from config import SCORECARD_DISPLAY_NAMES, MAX_SERVICES_DISPLAYED, MAX_FAILING_RULES_DISPLAYED
+from config import MAX_SERVICES_DISPLAYED, MAX_FAILING_RULES_DISPLAYED
 
 
 class IncidentServiceReporter:
@@ -134,10 +134,8 @@ class IncidentServiceReporter:
             # Display information for each scorecard
             if service_report.scorecards:
                 for scorecard in service_report.scorecards:
-                    scorecard_name = SCORECARD_DISPLAY_NAMES.get(
-                        scorecard.scorecard_tag,
-                        scorecard.scorecard_tag.replace("-", " ").title()
-                    )
+                    # Use the scorecard name from the API, fallback to formatted tag if not available
+                    scorecard_name = scorecard.scorecard_name or scorecard.scorecard_tag.replace("-", " ").title()
 
                     score_info = ""
                     level_info = ""

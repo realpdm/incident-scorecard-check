@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 import httpx
 from models import Incident, IncidentService, IncidentSeverity, IncidentStatus
-from config import INCIDENT_IO_BASE_URL, DEFAULT_PAGE_SIZE, SERVICE_FIELD_ID
+from config import INCIDENT_IO_BASE_URL, DEFAULT_PAGE_SIZE, get_service_field_id
 
 
 class IncidentIOClient:
@@ -137,7 +137,7 @@ class IncidentIOClient:
             # Look for the specific affected services custom field by ID
             custom_field_id = custom_field.get("id", "")
 
-            if custom_field_id == SERVICE_FIELD_ID:
+            if custom_field_id == get_service_field_id():
                 values = entry.get("values", [])
                 for value in values:
                     value_catalog_entry = value.get("value_catalog_entry", {})

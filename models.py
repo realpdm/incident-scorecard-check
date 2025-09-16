@@ -63,6 +63,7 @@ class ServiceScorecard(BaseModel):
     """Scorecard data for a service."""
     service_tag: str
     scorecard_tag: str
+    scorecard_name: Optional[str] = None
     scores: List[ScorecardScore] = Field(default_factory=list)
     total_score: Optional[float] = None
     current_level: Optional[str] = None

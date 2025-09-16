@@ -25,15 +25,28 @@ This tool was made as simple demonstration of the using the [Incident.io](https:
    uv sync
    ```
 
-2. **Configure API tokens:**
+2. **Configure environment variables:**
+   Create a `.env` file with the following required variables:
    ```bash
-   cp .env.example .env
-   # Edit .env and add your actual API tokens
+   # API Tokens (Required)
+   INCIDENT_IO_API_TOKEN=your_incident_io_api_token_here
+   CORTEX_API_TOKEN=your_cortex_api_token_here
+
+   # Site-specific Configuration (Required)
+   # Comma-separated list of scorecard tag IDs to analyze
+   TARGET_SCORECARD_TAGS=operational-readiness,security
+
+   # Service custom field ID from Incident.io for parsing affected services
+   SERVICE_FIELD_ID=01J9SK6HAXZDW46ED6618QSYRF
    ```
 
 3. **Get API tokens:**
    - **Incident.io**: https://app.incident.io/settings/api-keys
    - **Cortex.io**: https://app.getcortexapp.com/admin/settings/api-keys
+
+4. **Find required configuration values:**
+   - **TARGET_SCORECARD_TAGS**: Get scorecard tag IDs from Cortex.io (e.g., "operational-readiness", "security")
+   - **SERVICE_FIELD_ID**: Get the custom field ID from Incident.io that contains affected services
 
 ## Configuration
 
