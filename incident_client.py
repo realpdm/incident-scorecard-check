@@ -138,10 +138,8 @@ class IncidentIOClient:
             custom_field_id = custom_field.get("id", "")
 
             if custom_field_id == SERVICE_FIELD_ID:
-                print(f"Found services in custom field entries: {custom_field_id}")
                 values = entry.get("values", [])
                 for value in values:
-                    print(f"Value: {value}")
                     value_catalog_entry = value.get("value_catalog_entry", {})
                     if value_catalog_entry:
                         service_id = value_catalog_entry.get("external_id") or value_catalog_entry.get("id")
@@ -156,9 +154,6 @@ class IncidentIOClient:
                                 summary=value_catalog_entry.get("summary", value_catalog_entry.get("description"))
                             )
                             services.append(service)
-
-        if not services:
-            print("No services found in custom field entries")
 
         # Parse severity - it might be nested or direct
         severity_data = incident_data.get("severity", {})
