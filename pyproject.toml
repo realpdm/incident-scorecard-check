@@ -5,7 +5,7 @@ description = "A Python tool that analyzes incidents and their impact on service
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"},
+    {name = "Phillip Moore", email = "pdm@pobox.com"},
 ]
 keywords = ["incident-management", "monitoring", "scorecards", "cortex", "incident-io"]
 classifiers = [
